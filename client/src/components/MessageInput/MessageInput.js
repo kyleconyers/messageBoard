@@ -13,13 +13,6 @@ class MessageInput extends React.Component{
       messageText: event.target.value
     })
   }
-
-
-  handleMessageSubmit = (event) => {
-    this.postMessage(document.getElementById('new-message').value)
-    event.preventDefault()
-  }
-
   render() {
     return (
       <form>

@@ -76,7 +76,12 @@ if (process.env.NODE_ENV === 'production') {
 
 /* Express app ROUTING */
 app.use('/auth', require('./auth'))
-
+app.get("/messages", (req, res)=>{
+	
+	res.status(200).send({
+	success: true,
+	message: "worked"})
+} )
 // ====== Error handler ====
 app.use(function(err, req, res, next) {
 	console.log('====== ERROR =======')

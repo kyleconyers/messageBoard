@@ -18,7 +18,9 @@ import UserProfile from './components/UserProfile'
 import { SSL_OP_EPHEMERAL_RSA } from 'constants';
 
 
+
 const DisplayLinks = props => {
+	
 	if (props.loggedIn) {
 		return (
 			<nav className="navbar">
@@ -66,27 +68,55 @@ class App extends Component {
 		super()
 		this.state = {
 			loggedIn: false,
-			user: null
+			user: null,
+			messages: [
+				{topic: "topic",
+				location: "location",
+				id: "1"
+				},
+				
+				{topic: "topicOne",
+				location: "locationTwo",
+				id: "2" 
+				}
+			]
 		}
+		
+		this.messages = this.state.messages.map((value, key)=>{
+			return<li key={value.id} >
+				{value.topic}
+			</li>
+		})
+
+		
 		this._logout = this._logout.bind(this)
 		this._login = this._login.bind(this)
 	}
 	componentDidMount() {
-		axios.get('/auth/user').then(response => {
-			console.log(response.data)
-			if (!!response.data.user) {
-				console.log('THERE IS A USER')
-				this.setState({
-					loggedIn: true,
-					user: response.data.user
-				})
-			} else {
-				this.setState({
-					loggedIn: false,
-					user: null
-				})
-			}
+		axios.get(
+			"/messages"
+		
+		).then((r)=>{
+			console.log("line onehundred",r)
+		}).catch((err)=>{
+			console.log(err)
 		})
+
+		// axios.get('/auth/user').then(response => {
+		// 	console.log(response.data)
+		// 	if (!!response.data.user) {
+		// 		console.log('THERE IS A USER')
+		// 		this.setState({
+		// 			loggedIn: true,
+		// 			user: response.data.user
+		// 		})
+		// 	} else {
+		// 		this.setState({
+		// 			loggedIn: false,
+		// 			user: null
+		// 		})
+		// 	}
+		// })
 	}
 
 	_logout(event) {
@@ -157,8 +187,14 @@ class App extends Component {
 
 						{/* Main portion of center showing variable content */}
 						<CenterBody user={this.state.user} className="centerBody">
-
-							<Route
+							dummy text
+							
+							<ul>
+								<li>
+									{this.messages}
+								</li>
+							</ul>
+							{/* <Route
 								exact
 								path="/login"
 								render={() =>
@@ -175,7 +211,7 @@ class App extends Component {
 								auth={this.state.loggedIn}
 								loaded={this.state.loaded}
 								user={this.state.user}
-							/>
+							/> */}
 							
 						</CenterBody>
 					</Center>
