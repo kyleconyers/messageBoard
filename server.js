@@ -14,7 +14,7 @@ const dbConnection = require('./db') // loads our connection to the mongo databa
 const passport = require('./passport')
 const app = express()
 const PORT = process.env.PORT || 3001
-
+const Message = require("./db/models/message")
 // ===== Middleware ====
 app.use(morgan('dev'))
 app.use(
@@ -77,10 +77,13 @@ if (process.env.NODE_ENV === 'production') {
 /* Express app ROUTING */
 app.use('/auth', require('./auth'))
 app.get("/messages", (req, res)=>{
+	Message.find({}).then((messages)=>{
+		res.status(200).send({
+		success: true,
+		messages: messages})
+	})
+
 	
-	res.status(200).send({
-	success: true,
-	message: "worked"})
 } )
 // ====== Error handler ====
 app.use(function(err, req, res, next) {

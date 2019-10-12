@@ -82,11 +82,11 @@ class App extends Component {
 			]
 		}
 		
-		this.messages = this.state.messages.map((value, key)=>{
-			return<li key={value.id} >
-				{value.topic}
-			</li>
-		})
+		// this.messages = this.state.messages.map((value, key)=>{
+		// 	return<li key={value.id} >
+		// 		{value.topic}
+		// 	</li>
+		// })
 
 		
 		this._logout = this._logout.bind(this)
@@ -98,6 +98,12 @@ class App extends Component {
 		
 		).then((r)=>{
 			console.log("line onehundred",r)
+			this.setState({messages: r.data.messages})
+			this.messages = this.state.messages.map((value, key)=>{
+				return<li key={value._id} >
+				{value.text}
+			</li>
+			})
 		}).catch((err)=>{
 			console.log(err)
 		})
